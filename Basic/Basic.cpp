@@ -127,8 +127,10 @@ void processLine(std::string line, Program &program, EvalState &state) {
 
 void executeProgram(Program &program, EvalState &state) {
     int currentLine = program.getFirstLineNumber();
+    int executionCount = 0;
+    const int MAX_EXECUTIONS = 10000; // Prevent infinite loops
 
-    while (currentLine != -1) {
+    while (currentLine != -1 && executionCount < MAX_EXECUTIONS) {
         Statement *stmt = program.getParsedStatement(currentLine);
         if (stmt == nullptr) {
             // Parse the line if not already parsed
@@ -162,6 +164,11 @@ void executeProgram(Program &program, EvalState &state) {
         }
 
         currentLine = program.getNextLineNumber(currentLine);
+        executionCount++;
+    }
+
+    if (executionCount >= MAX_EXECUTIONS) {
+        error("Program execution limit exceeded - possible infinite loop");
     }
 }
 
