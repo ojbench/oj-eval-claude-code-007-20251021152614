@@ -90,6 +90,11 @@ void InputStatement::execute(EvalState &state, Program &program) {
     std::string input;
     std::getline(std::cin, input);
 
+    // Handle empty input
+    if (input.empty()) {
+        error("Invalid INPUT value");
+    }
+
     // Convert string to integer
     try {
         int value = stringToInteger(input);

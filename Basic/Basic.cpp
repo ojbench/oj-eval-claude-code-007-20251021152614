@@ -189,22 +189,26 @@ Statement *parseStatement(std::string line) {
 
     std::string firstToken = scanner.nextToken();
 
-    if (firstToken == "REM") {
-        return new RemStatement(scanner);
-    } else if (firstToken == "LET") {
-        return new LetStatement(scanner);
-    } else if (firstToken == "PRINT") {
-        return new PrintStatement(scanner);
-    } else if (firstToken == "INPUT") {
-        return new InputStatement(scanner);
-    } else if (firstToken == "END") {
-        return new EndStatement(scanner);
-    } else if (firstToken == "GOTO") {
-        return new GotoStatement(scanner);
-    } else if (firstToken == "IF") {
-        return new IfStatement(scanner);
-    } else {
-        error("Invalid statement: " + firstToken);
+    try {
+        if (firstToken == "REM") {
+            return new RemStatement(scanner);
+        } else if (firstToken == "LET") {
+            return new LetStatement(scanner);
+        } else if (firstToken == "PRINT") {
+            return new PrintStatement(scanner);
+        } else if (firstToken == "INPUT") {
+            return new InputStatement(scanner);
+        } else if (firstToken == "END") {
+            return new EndStatement(scanner);
+        } else if (firstToken == "GOTO") {
+            return new GotoStatement(scanner);
+        } else if (firstToken == "IF") {
+            return new IfStatement(scanner);
+        } else {
+            error("Invalid statement: " + firstToken);
+            return nullptr;
+        }
+    } catch (...) {
         return nullptr;
     }
 }

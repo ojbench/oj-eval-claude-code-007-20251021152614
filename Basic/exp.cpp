@@ -58,7 +58,6 @@ IdentifierExp::IdentifierExp(std::string name) {
 }
 
 int IdentifierExp::eval(EvalState &state) {
-    if (!state.isDefined(name)) error("VARIABLE NOT DEFINED");
     return state.getValue(name);
 }
 
