@@ -8,6 +8,7 @@
 
 
 #include "evalstate.hpp"
+#include "Utils/error.hpp"
 
 
 //using namespace std;
@@ -23,13 +24,13 @@ EvalState::~EvalState() {
 }
 
 void EvalState::setValue(std::string var, int value) {
-    if(isDefined(var)) symbolTable[var] = value;
-    else symbolTable.emplace(var,value);
+    symbolTable[var] = value;
 }
 
 int EvalState::getValue(std::string var) {
     if(isDefined(var)) return symbolTable[var];
-    else return 0;
+    else error("Undefined variable: " + var);
+    return 0; // This line will never be reached due to error()
 }
 
 bool EvalState::isDefined(std::string var) {
